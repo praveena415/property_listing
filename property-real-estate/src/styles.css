@@ -1,0 +1,209 @@
+/* src/styles.css - plain CSS theme for PropFinder (updated for inline filter rows) */
+
+/* ---------- Reset & base ---------- */
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg, #f7fbff 0%, #f3f7f9 50%, #eef6f9 100%);
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- Containers ---------- */
+.container { max-width: 1150px; margin: 24px auto; padding: 0 18px; }
+
+/* ---------- Branding / Colors ---------- */
+:root {
+  --brand: #2c6ee8;      /* cool blue */
+  --accent: #14b8a6;     /* teal accent */
+  --muted: #6b7280;      /* muted gray */
+  --card: #ffffff;
+  --glass: rgba(255,255,255,0.7);
+  --shadow: 0 10px 30px rgba(16,24,40,0.08);
+  --soft-shadow: 0 6px 18px rgba(16,24,40,0.06);
+}
+
+/* ---------- Header / Navbar ---------- */
+.header, .navbar {
+  background: linear-gradient(90deg, rgba(44,110,232,0.06), rgba(20,184,166,0.03));
+  backdrop-filter: blur(4px);
+  border-bottom: 1px solid rgba(15,23,42,0.03);
+}
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+}
+.brand {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:700;
+  color:var(--brand);
+  font-size:20px;
+}
+.brand .logo {
+  width:40px;height:40px;background:linear-gradient(135deg,var(--brand),var(--accent));
+  border-radius:8px; box-shadow: var(--soft-shadow);
+  display:inline-block;
+}
+.nav-links { display:flex; gap:12px; align-items:center; }
+.nav-links a { text-decoration:none; color:var(--muted); padding:8px; border-radius:8px; transition: all .18s ease; }
+.nav-links a:hover { background: rgba(44,110,232,0.06); color:var(--brand); transform: translateY(-1px); }
+.btn {
+  padding:8px 12px; border-radius:8px; border:1px solid rgba(15,23,42,0.06);
+  background: #fff; cursor:pointer;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: var(--soft-shadow); }
+.btn-primary {
+  background: linear-gradient(90deg,var(--brand),#2b79ff);
+  color: #fff; border:none;
+  box-shadow: 0 6px 18px rgba(44,110,232,0.18);
+}
+
+/* ---------- Layout: sidebar & content ---------- */
+.grid-4 {
+  display: grid;
+  grid-template-columns: 1100px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .grid-4 { grid-template-columns: 1fr; }
+}
+
+/* ---------- Card ---------- */
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(16,24,40,0.10); }
+.card-body { padding: 14px; }
+
+/* ---------- Filters ---------- */
+.filters { padding: 14px; }
+.filters h3 { margin: 0 0 10px 0; font-size:16px; color:#0b1220; }
+
+/* INPUT/SELECT sizing: flexible by default */
+.input, .select, .textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #e6eef6;
+  background: #fbfdff;
+  outline: none;
+  transition: box-shadow .12s ease, border-color .12s ease;
+}
+.input:focus, .select:focus, .textarea:focus { box-shadow: 0 6px 18px rgba(44,110,232,0.08); border-color: var(--brand); }
+
+/* Apply button */
+.btn-apply { margin-top: 8px; padding: 10px 12px; border-radius: 10px; background: var(--brand); color: #fff; border: none; cursor: pointer; }
+
+/* pill buttons */
+.btn-pill { padding: 7px 12px; margin: 6px 6px 6px 0; border-radius: 999px; border: 1px solid #e6eef6; background: transparent; cursor: pointer; transition: all .12s ease; }
+.btn-pill.active { background: linear-gradient(90deg,var(--brand),#347cff); color: #fff; border: none; transform: translateY(-2px); }
+
+/* ---------- NEW: Filter rows (inline layout) ---------- */
+/* Wrapper for a horizontal row of filter columns */
+.filters-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap; /* allows wrapping on small screens */
+}
+
+/* Each column occupies equal share; min-width prevents collapsing too small */
+.filters-col {
+  flex: 1 1 200px; /* grow, shrink, base 200px */
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* for amenities area where many pills exist, allow it to take more width */
+.amenities-col {
+  flex: 2 1 260px;
+}
+
+/* Label styling */
+.label { font-size: 13px; color: #334155; margin-bottom: 6px; }
+
+/* small tweak for inputs inside the horizontal rows: limit max width for numeric price inputs */
+.filters-col .input[type="number"] { max-width: 120px; }
+
+/* ---------- Property list ---------- */
+.results-header { display:flex; justify-content:space-between; align-items:center; margin:12px 0; color:var(--muted); }
+.grid-cards { display:grid; gap:14px; grid-template-columns: repeat(3, 1fr); }
+@media (max-width:1100px) { .grid-cards { grid-template-columns: repeat(2,1fr); } }
+@media (max-width:640px) { .grid-cards { grid-template-columns: 1fr; } }
+
+.property-media { height:200px; overflow:hidden; background: linear-gradient(180deg, #eef6ff, #f7fbff); display:flex; align-items:center; justify-content:center; }
+.property-media img { width:100%; height:100%; object-fit:cover; transition: transform .4s cubic-bezier(.2,.8,.2,1); }
+.property-media:hover img { transform: scale(1.04); }
+
+.property-info { padding:12px; display:flex; flex-direction:column; gap:8px; min-height:160px; }
+.property-title { font-size:16px; font-weight:600; color:#071133; text-decoration:none; }
+.property-meta { color:var(--muted); font-size:13px; }
+.property-price { color:var(--brand); font-weight:700; font-size:15px; }
+.card-actions { margin-top:auto; display:flex; gap:8px; align-items:center; }
+.btn-outline { padding:8px 10px; border-radius:10px; border:1px solid #e6eef6; background:#fff; cursor:pointer; }
+.btn-fav { padding:8px 10px; border-radius:10px; border:1px solid #ffd6e0; background:#fff; color:#ec4899; }
+
+/* ---------- List view ---------- */
+.list-card { display:flex; gap:12px; }
+.list-card .property-media { width:40%; height:160px; }
+.list-card .property-info { width:60%; }
+
+/* ---------- Map placeholder ---------- */
+.map-placeholder { height:360px; background: url('/img/map-bg.jpg') center/cover no-repeat, linear-gradient(180deg,#f8fbff,#fbffff); border-radius:10px; display:flex; align-items:center; justify-content:center; color:var(--muted); border:1px dashed rgba(15,23,42,0.05); }
+
+/* ---------- Details page ---------- */
+.details-grid { display:grid; grid-template-columns: 2fr 1fr; gap:18px; }
+@media (max-width:860px) { .details-grid { grid-template-columns: 1fr } }
+.hero { height:420px; overflow:hidden; border-radius:12px; background: #eef7ff; }
+.hero img { width:100%; height:100%; object-fit:cover; display:block; transition: transform .4s ease; }
+.hero:hover img { transform: scale(1.02); }
+
+.thumbs { display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; margin-top:10px; }
+.thumb img { width:100%; height:64px; object-fit:cover; border-radius:8px; cursor:pointer; border:2px solid transparent; transition: border-color .12s ease, transform .12s ease; }
+.thumb:hover img { transform: translateY(-2px); }
+.thumb.active img { border-color: var(--brand); }
+
+/* ---------- Agent box & contact ---------- */
+.agent-box { padding:14px; border-radius:12px; background: linear-gradient(180deg,#ffffff,#fbfdff); box-shadow: var(--soft-shadow); }
+.agent-info { display:flex; flex-direction:column; gap:6px; }
+.contact-form { display:flex; flex-direction:column; gap:8px; margin-top:8px; }
+.contact-form input, .contact-form textarea { padding:10px; border-radius:8px; border:1px solid #e6eef6; }
+.btn-send { padding:10px; background: linear-gradient(90deg,var(--accent),#10b981); color:#fff; border:none; border-radius:8px; cursor:pointer; }
+
+/* ---------- Compare table ---------- */
+.compare-table { width:100%; border-collapse:collapse; border-radius:10px; overflow:hidden; background:#fff; }
+.compare-table th, .compare-table td { padding:12px; border-bottom:1px solid #f3f6fb; text-align:left; }
+.compare-table thead { background:linear-gradient(90deg,#f8fbff,#fff); }
+
+/* ---------- Footer ---------- */
+.site-footer { margin-top:36px; padding:18px 0; color:var(--muted); text-align:center; }
+
+/* ---------- Utility ---------- */
+.small-muted { color:var(--muted); font-size:13px; }
+.hidden { display:none; }
+.center { display:flex; align-items:center; justify-content:center; }
+
+/* ---------- Responsive tweaks ---------- */
+@media (max-width:920px) {
+  /* stack the top filter row more gracefully on medium screens */
+  .filters-col { min-width: 160px; flex-basis: 220px; }
+}
+@media (max-width:560px) {
+  /* on small screens let each filter take full width */
+  .filters-row { flex-direction: column; gap: 10px; }
+  .filters-col { flex-basis: auto; min-width: auto; }
+}

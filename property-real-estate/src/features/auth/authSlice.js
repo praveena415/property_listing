@@ -1,71 +1,25 @@
-import {createSlice, createAsyncThunk} from "@reduxjs/toolkit"
-import { createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth"
-import {auth} from "../../utils/firebase"
+import { createSlice } from "@reduxjs/toolkit";
 
-//signup
-export const signupUser = createAsyncThunk(
-    "auth/signupUser",
-    async ({email,password},{rejectWithValue})=>{
-        try {
-            const userCredentials = await createUserWithEmailAndPassword(
-                auth,email,password 
-            )
-            return userCredentials.user
-        } catch (error) {
-            return rejectWithValue(error.message)
-        }
-    }
-)
+/*
+  Simple auth slice kept minimal. We use local/demo auth in the app
+  for demonstration. If you hook Firebase login/sign-up flows, you can
+  dispatch actions to set user state here.
+*/
 
-//login
-export const loginUser = createAsyncThunk("auth/loginUser",
-     async({email,password},{rejectWithValue})=>{
-        try {
-            const userCredentials = await signInWithEmailAndPassword(auth,email,password)
-            return userCredentials.user;
-        } catch (error) {
-            rejectWithValue(error.message);
-        }
-    }
-)
-
-//Auth Slice
 const authSlice = createSlice({
-    name : "auth",
-    initialState:{
-        user:null,
-        loading:false,
-        error:null,
-    },
-    resucers:{},
-    extraReducers:(builder)=>{
-        builder
-        //signup
-        .addCase(signupUser.pending,(state)=>{
-            state.loading = true;
-        })
-        .addCase(signupUser.fulfilled,(state,action)=>{
-            state.loading = false;
-            state.user = action.payload;
-        })
-        .addCase(signupUser.rejected,(state,action)=>{
-            state.loading = false;
-            state.user = action.payload;
-        })
+  name: "auth",
+  initialState: {
+    user: null,
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    setUser(state, action) { state.user = action.payload; },
+    logout(state) { state.user = null; },
+    setLoading(state, action) { state.loading = action.payload; },
+    setError(state, action) { state.error = action.payload; },
+  },
+});
 
-        //login
-        .addCase(loginUser.pending,(state)=>{
-            state.loading = true;
-        })
-        .addCase(loginUser.fulfilled,(state,action)=>{
-            state.loading = false;
-            state.user = action.payload;
-        })
-        .addCase(loginUser.rejected,(state,action)=>{
-            state.loading = false;
-            state.user = action.payload
-        })
-    }
-})
-export const {logout} = authSlice.actions;
+export const { setUser, logout, setLoading, setError } = authSlice.actions;
 export default authSlice.reducer;

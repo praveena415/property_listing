@@ -1,1 +1,213 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------
+   Font / base tweaks
+   ------------------------ */
+:root {
+  --brand: #4f6fff;
+  --muted: #6b7280;
+}
+
+html, body, #root {
+  height: 100%;
+  background-color: #f3f4f6; /* light gray bg */
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ------------------------
+   Common component tokens
+   ------------------------ */
+.container {
+  max-width: 1200px;
+}
+
+/* ------------------------
+   Buttons - utility classes
+   ------------------------ */
+.btn {
+  @apply inline-flex items-center justify-center rounded-md font-medium transition-shadow duration-150;
+}
+
+.btn-primary {
+  @apply btn bg-brand-500 text-white px-4 py-2 shadow-sm hover:bg-brand-600 active:scale-99;
+}
+
+.btn-ghost {
+  @apply btn bg-white border px-3 py-1 text-gray-700 hover:shadow-sm;
+}
+
+.btn-outline {
+  @apply btn border border-gray-200 text-gray-700 px-3 py-1;
+}
+
+/* ------------------------
+   Card and shadow helpers
+   ------------------------ */
+.card {
+  @apply bg-white rounded-lg shadow-card overflow-hidden;
+}
+
+/* ------------------------
+   Carousel / Media helpers
+   ------------------------ */
+/* ensures images cover container and don't stretch */
+.carousel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* the large hero image in details */
+.hero-media {
+  height: 24rem; /* 384px */
+}
+@media (min-width: 768px) {
+  .hero-media { height: 28rem; } /* larger on desktop */
+}
+
+/* small thumbnail ring when selected */
+.thumb {
+  @apply h-20 w-full object-cover rounded cursor-pointer transition-shadow duration-150;
+}
+.thumb:focus,
+.thumb:hover {
+  @apply ring-2 ring-brand-500;
+}
+
+/* ------------------------
+   Filters panel
+   ------------------------ */
+.filter-panel {
+  @apply bg-white rounded-lg p-4 shadow-sm;
+}
+.filter-title {
+  @apply text-sm font-semibold mb-2 text-gray-700;
+}
+
+/* active filter pill */
+.filter-pill {
+  @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm border;
+}
+.filter-pill-active {
+  @apply bg-brand-500 text-white border-transparent;
+}
+
+/* ------------------------
+   Form styling (lightweight)
+   ------------------------ */
+.form-input {
+  @apply w-full border border-gray-200 rounded-md px-3 py-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-200;
+}
+
+.form-textarea {
+  @apply w-full border border-gray-200 rounded-md px-3 py-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-200;
+}
+
+/* validation error */
+.form-error {
+  @apply text-xs text-red-500 mt-1;
+}
+
+/* ------------------------
+   Focus and accessibility
+   ------------------------ */
+:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(79,111,255,0.12);
+  border-radius: .375rem;
+}
+
+/* ------------------------
+   Responsive helpers: hide/show on small screens
+   ------------------------ */
+.hide-sm { display: none; }
+@media (min-width: 640px) {
+  .hide-sm { display: block; }
+}
+
+/* ------------------------
+   Map & placeholders
+   ------------------------ */
+.map-placeholder {
+  @apply rounded-lg bg-gray-100 h-64 flex items-center justify-center text-gray-500;
+}
+
+/* ------------------------
+   Small utilities for text
+   ------------------------ */
+.muted { color: #6b7280; }
+.price { color: #374151; font-weight: 700; }
+
+/* ------------------------
+   Tiny animations
+   ------------------------ */
+.fade-in {
+  animation: fadeIn 260ms ease-in both;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ------------------------
+   Print-safe: make compacts for print
+   ------------------------ */
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; color: black; }
+}
+/* --- Equal-gutter layout for filter + content --- */
+
+/* CSS variable for filter fixed width */
+:root {
+  --filter-width: 320px; /* adjust as needed */
+  --filter-gap: 24px;    /* horizontal gap between filter and content */
+}
+
+/* Grid with two symmetric gutters and a fixed-width filter column */
+.grid-eq-gutters {
+  display: grid;
+  /* left gutter | filter | main content | right gutter */
+  grid-template-columns: 1fr var(--filter-width) 3fr 1fr;
+  gap: var(--filter-gap);
+  align-items: start;
+}
+
+/* On medium / small screens, stack content vertically: filter first then content */
+@media (max-width: 920px) {
+  .grid-eq-gutters {
+    grid-template-columns: 1fr; /* one column */
+    gap: 12px;
+  }
+  /* move filter above content on small screens */
+  .filters-column {
+    order: -1;
+  }
+}
+
+/* Keep filter visually centered in its column */
+.filters-column {
+  width: var(--filter-width);
+  /* ensure it doesn't shrink */
+  justify-self: center;
+}
+
+/* Keep main content to occupy the 'main content' column */
+.content-column {
+  width: 100%;
+  justify-self: stretch;
+  grid-column: 3 / 4; /* place in the third column */
+}
+
+/* If you want the main content to span both center and right gutter on very wide screens
+   (optional), change as needed. For now, content lives in the main column. */
+
+/* Keep responsiveness: when grid collapses to 1 column, make widths auto */
+@media (max-width: 920px) {
+  .filters-column, .content-column { width: 100%; justify-self: stretch; grid-column: auto; }
+}

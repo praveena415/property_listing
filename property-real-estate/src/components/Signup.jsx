@@ -1,48 +1,41 @@
+// src/components/SignUp.jsx
 import React, { useState } from "react";
-import {useDispatch, useSelector} from "react-redux"
-import { signupUser } from "../features/auth/authSlice";
+import { Link, useNavigate } from "react-router-dom";
+import { auth } from "../utils/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
-function Signup(){
-    const dispatch = useDispatch()
-    const {user,loading,error} = useSelector((state)=>state.action);
-    const [email,setEmail ] = useState("")
-    const [password,setPassword] = useState("")
-    const [formError,setFormError] = useState("")
+export default function SignUp({ setUser }) {
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  const [err, setErr] = useState("");
+  const navigate = useNavigate();
 
-    const handleSubmit = (e)=>{
-        e.preventDefault();
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setErr("");
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, email, pass);
+      const u = { email: cred.user.email, uid: cred.user.uid };
+      setUser(u);
+      localStorage.setItem("demoUser", JSON.stringify(u));
+      navigate("/");
+    } catch (error) {
+      setErr(error.message);
+    }
+  }
 
-        if(!email||!password){
-            setFormError("Please fill details")
-            return 
-        }
-        if(password.length<6){
-            setFormError("Password must be at least 6 charactors")
-            return
-        }
-        setFormError("")
-        dispatch(signupUser({email,password}))
-    };
-
-    return (
-        <>
-            <div>
-                {/*logo*/}
-            </div>
-            <h2>Signup</h2>
-            <form onSubmit = {handleSubmit}>
-                <input type="email" placeholder="Enter email" value={email} onChange={(e)=>setEmail(e.target.value)} />
-                <input type="password" placeholder="Enter password" value={password} onChange={(e)=>setPassword(e.target.value)} />
-
-                {/*form validation error handling */}
-                {formError && (<div>{formError}</div>)}
-
-                {/*backend error handling */}
-                {error && (<div>{error}</div>)}
-                <button type="submit" disabled={loading}>{loading?"Signing up...":"Sign up"}</button>
-            </form>
-        </>
-    )
-    
+  return (
+    <div className="card" style={{ maxWidth: 520, margin: "20px auto", padding: 18 }}>
+      <h2>Create account</h2>
+      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        <input className="input" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" type="email" />
+        <input className="input" value={pass} onChange={e => setPass(e.target.value)} placeholder="Password (min 6 char)" type="password" />
+        <button className="btn-apply" type="submit">Sign Up</button>
+      </form>
+      {err && <div className="error" style={{ marginTop: 8 }}>{err}</div>}
+      <p className="small-muted" style={{ marginTop: 10 }}>
+        Already a member? <Link to="/signin">Sign in</Link>
+      </p>
+    </div>
+  );
 }
-export default Signup

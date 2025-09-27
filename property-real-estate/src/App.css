@@ -1,1 +1,21 @@
-@import "tailwindcss";
+/* @import "tailwindcss"; */
+
+
+body { font-family: sans-serif; background: #f6f6f6; }
+.auth-container, .main-container { max-width: 500px; margin: 30px auto; background: #fff; padding: 20px; border-radius: 8px; }
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.filters { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+.grid-list { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.property-card { background: #fafafa; padding: 12px; cursor: pointer; border-radius: 8px; box-shadow: 0 2px 8px #0002; }
+.property-card img.thumb { width: 100%; border-radius: 5px; }
+.details-modal { position: fixed; top:0; left:0; right:0; bottom:0; background: #0008; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.media-img { width: 200px; height: 160px; margin-right: 10px; object-fit: cover; border-radius: 8px; }
+.contact-section { background: #f4f4f4; padding: 10px; border-radius:8px; margin-top:10px; }
+.close-btn { position: absolute; right: 40px; top: 60px; background: #c44; color: #fff; border: none; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; font-size: 20px; }
+.err { color: #d33; }
+.success { color: #292; }
+@media (max-width: 600px) {
+  .grid-list { grid-template-columns: 1fr; }
+  .main-container, .auth-container { max-width: 100%; margin: 10px; }
+  .media-img { width: 95vw; height: 180px; }
+}
