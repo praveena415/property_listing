@@ -1,4 +1,4 @@
-// Firebase config - replace with your own if needed
+
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 

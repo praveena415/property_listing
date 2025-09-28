@@ -1,4 +1,4 @@
-// src/components/Favorites.jsx
+
 import React from "react";
 import { loadFromLocal } from "../utils/localStorage";
 import PROPERTY_DATA from "../data/properties";

@@ -1,4 +1,4 @@
-// src/components/Home.jsx
+
 import React from "react";
 import PropertyList from "./PropertyList";
 

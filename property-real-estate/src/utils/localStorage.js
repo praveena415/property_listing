@@ -12,6 +12,6 @@ export const saveToLocal = (key, data) => {
   try {
     localStorage.setItem(key, JSON.stringify(data));
   } catch (e) {
-    // ignore errors
+   
   }
 };

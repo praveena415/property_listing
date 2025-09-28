@@ -1,11 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-/*
-  Simple auth slice kept minimal. We use local/demo auth in the app
-  for demonstration. If you hook Firebase login/sign-up flows, you can
-  dispatch actions to set user state here.
-*/
-
 const authSlice = createSlice({
   name: "auth",
   initialState: {

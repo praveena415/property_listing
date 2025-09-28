@@ -1,60 +1,82 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* ------------------------
-   Font / base tweaks
-   ------------------------ */
 :root {
   --brand: #4f6fff;
+  --brand-dark: #3f5be6;
   --muted: #6b7280;
+  --gray-100: #f3f4f6;
+  --gray-200: #e6e9ee;
+  --gray-700: #374151;
+  --shadow-card: 0 12px 30px rgba(16,24,40,0.08);
+  --shadow-sm: 0 6px 12px rgba(16,24,40,0.06);
 }
 
 html, body, #root {
   height: 100%;
-  background-color: #f3f4f6; /* light gray bg */
+  background-color: var(--gray-100);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  color: #0f172a;
 }
 
-/* ------------------------
-   Common component tokens
-   ------------------------ */
 .container {
   max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
-/* ------------------------
-   Buttons - utility classes
-   ------------------------ */
 .btn {
-  @apply inline-flex items-center justify-center rounded-md font-medium transition-shadow duration-150;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: .375rem; 
+  font-weight: 500;
+  transition: box-shadow .15s ease, transform .12s ease;
+  cursor: pointer;
+  user-select: none;
 }
 
 .btn-primary {
-  @apply btn bg-brand-500 text-white px-4 py-2 shadow-sm hover:bg-brand-600 active:scale-99;
+  background-color: var(--brand);
+  color: white;
+  padding: 0.5rem 1rem; 
+  box-shadow: 0 6px 18px rgba(79,111,255,0.18);
+  border: none;
+}
+.btn-primary:hover {
+  background-color: var(--brand-dark);
+}
+.btn-primary:active {
+  transform: scale(.99);
 }
 
 .btn-ghost {
-  @apply btn bg-white border px-3 py-1 text-gray-700 hover:shadow-sm;
+  background: white;
+  border: 1px solid #e6e6e6;
+  padding: 0.25rem 0.75rem;
+  color: #374151;
+  box-shadow: none;
+}
+.btn-ghost:hover {
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-outline {
-  @apply btn border border-gray-200 text-gray-700 px-3 py-1;
+  background: white;
+  border: 1px solid #e6eef6;
+  color: #374151;
+  padding: 0.25rem 0.75rem;
 }
 
-/* ------------------------
-   Card and shadow helpers
-   ------------------------ */
 .card {
-  @apply bg-white rounded-lg shadow-card overflow-hidden;
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
 }
 
-/* ------------------------
-   Carousel / Media helpers
-   ------------------------ */
-/* ensures images cover container and don't stretch */
 .carousel-img {
   width: 100%;
   height: 100%;
@@ -62,90 +84,130 @@ html, body, #root {
   display: block;
 }
 
-/* the large hero image in details */
 .hero-media {
-  height: 24rem; /* 384px */
+  height: 24rem;
+  overflow: hidden;
 }
 @media (min-width: 768px) {
-  .hero-media { height: 28rem; } /* larger on desktop */
+  .hero-media { height: 28rem; }
 }
 
-/* small thumbnail ring when selected */
 .thumb {
-  @apply h-20 w-full object-cover rounded cursor-pointer transition-shadow duration-150;
+  display: block;
+  height: 5rem; 
+  width: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: box-shadow .15s ease, transform .12s ease, border-color .12s ease;
+  border: 2px solid transparent;
+  overflow: hidden;
+}
+.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .thumb:focus,
 .thumb:hover {
-  @apply ring-2 ring-brand-500;
+  box-shadow: 0 6px 18px rgba(79,111,255,0.12);
+  border-color: rgba(79,111,255,0.6);
+  transform: translateY(-2px);
 }
 
-/* ------------------------
-   Filters panel
-   ------------------------ */
 .filter-panel {
-  @apply bg-white rounded-lg p-4 shadow-sm;
+  background: white;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
 }
 .filter-title {
-  @apply text-sm font-semibold mb-2 text-gray-700;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #374151;
 }
 
-/* active filter pill */
 .filter-pill {
-  @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm border;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  border: 1px solid #e6eef6;
+  background: transparent;
+  color: #374151;
+  cursor: pointer;
+}
+.filter-pill:hover {
+  box-shadow: var(--shadow-sm);
 }
 .filter-pill-active {
-  @apply bg-brand-500 text-white border-transparent;
+  background: var(--brand);
+  color: white;
+  border-color: transparent;
 }
 
-/* ------------------------
-   Form styling (lightweight)
-   ------------------------ */
 .form-input {
-  @apply w-full border border-gray-200 rounded-md px-3 py-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-200;
+  width: 100%;
+  border: 1px solid #e6eef6;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 0.95rem;
+  color: #0f172a;
+}
+.form-input::placeholder { color: #9aa4b2; }
+.form-input:focus {
+  outline: none;
+  box-shadow: 0 6px 18px rgba(79,111,255,0.08);
+  border-color: var(--brand);
 }
 
 .form-textarea {
-  @apply w-full border border-gray-200 rounded-md px-3 py-2 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-200;
+  width: 100%;
+  border: 1px solid #e6eef6;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 0.95rem;
+}
+.form-textarea:focus {
+  outline: none;
+  box-shadow: 0 6px 18px rgba(79,111,255,0.08);
+  border-color: var(--brand);
 }
 
-/* validation error */
 .form-error {
-  @apply text-xs text-red-500 mt-1;
+  margin-top: 6px;
+  font-size: 0.75rem;
+  color: #ef4444; 
 }
 
-/* ------------------------
-   Focus and accessibility
-   ------------------------ */
 :focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(79,111,255,0.12);
   border-radius: .375rem;
 }
 
-/* ------------------------
-   Responsive helpers: hide/show on small screens
-   ------------------------ */
 .hide-sm { display: none; }
 @media (min-width: 640px) {
   .hide-sm { display: block; }
 }
 
-/* ------------------------
-   Map & placeholders
-   ------------------------ */
 .map-placeholder {
-  @apply rounded-lg bg-gray-100 h-64 flex items-center justify-center text-gray-500;
+  border-radius: 10px;
+  background: #f3f4f6;
+  height: 16rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
 }
 
-/* ------------------------
-   Small utilities for text
-   ------------------------ */
-.muted { color: #6b7280; }
-.price { color: #374151; font-weight: 700; }
+.muted { color: var(--muted); }
+.price { color: var(--gray-700); font-weight: 700; }
 
-/* ------------------------
-   Tiny animations
-   ------------------------ */
 .fade-in {
   animation: fadeIn 260ms ease-in both;
 }
@@ -154,60 +216,119 @@ html, body, #root {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ------------------------
-   Print-safe: make compacts for print
-   ------------------------ */
 @media print {
   .no-print { display: none !important; }
   body { background: white; color: black; }
 }
-/* --- Equal-gutter layout for filter + content --- */
 
-/* CSS variable for filter fixed width */
 :root {
-  --filter-width: 320px; /* adjust as needed */
-  --filter-gap: 24px;    /* horizontal gap between filter and content */
+  --filter-width: 320px;
+  --filter-gap: 24px;
 }
 
-/* Grid with two symmetric gutters and a fixed-width filter column */
 .grid-eq-gutters {
   display: grid;
-  /* left gutter | filter | main content | right gutter */
   grid-template-columns: 1fr var(--filter-width) 3fr 1fr;
   gap: var(--filter-gap);
   align-items: start;
 }
 
-/* On medium / small screens, stack content vertically: filter first then content */
 @media (max-width: 920px) {
   .grid-eq-gutters {
-    grid-template-columns: 1fr; /* one column */
+    grid-template-columns: 1fr;
     gap: 12px;
   }
-  /* move filter above content on small screens */
   .filters-column {
     order: -1;
   }
 }
 
-/* Keep filter visually centered in its column */
 .filters-column {
   width: var(--filter-width);
-  /* ensure it doesn't shrink */
   justify-self: center;
 }
 
-/* Keep main content to occupy the 'main content' column */
 .content-column {
   width: 100%;
   justify-self: stretch;
-  grid-column: 3 / 4; /* place in the third column */
+  grid-column: 3 / 4;
 }
 
-/* If you want the main content to span both center and right gutter on very wide screens
-   (optional), change as needed. For now, content lives in the main column. */
-
-/* Keep responsiveness: when grid collapses to 1 column, make widths auto */
 @media (max-width: 920px) {
-  .filters-column, .content-column { width: 100%; justify-self: stretch; grid-column: auto; }
+  .filters-column, .content-column {
+    width: 100%;
+    justify-self: stretch;
+    grid-column: auto;
+  }
 }
+
+.shadow-card {
+  box-shadow: var(--shadow-card);
+}
+
+.small-muted { color: var(--muted); font-size: 0.875rem; }
+
+.property-media {
+  height: 200px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #eef6ff, #f7fbff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.property-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .4s cubic-bezier(.2,.8,.2,1);
+}
+.property-media:hover img { transform: scale(1.04); }
+
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  border: 1px solid #e6eef6;
+  background: transparent;
+  cursor: pointer;
+}
+.btn-pill.active {
+  background: linear-gradient(90deg, var(--brand), #347cff);
+  color: white;
+  border: none;
+  transform: translateY(-2px);
+}
+
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+
+.agent-box {
+  padding: 14px;
+  border-radius: 12px;
+  background: linear-gradient(180deg,#ffffff,#fbfdff);
+  box-shadow: var(--shadow-sm);
+}
+.agent-info { display: flex; flex-direction: column; gap: 6px; }
+
+
+.contact-form { display:flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.contact-form input, .contact-form textarea {
+  padding: 10px; border-radius: 8px; border: 1px solid #e6eef6;
+}
+
+.compare-table { width:100%; border-collapse: collapse; border-radius: 10px; overflow: hidden; background: #fff; }
+.compare-table th, .compare-table td { padding: 12px; border-bottom: 1px solid #f3f6fb; text-align: left; }
+.compare-table thead { background: linear-gradient(90deg,#f8fbff,#fff); }
+
+
+.center { display:flex; align-items:center; justify-content:center; }
+.hidden { display:none; }
+
+

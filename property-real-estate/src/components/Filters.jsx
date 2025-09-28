@@ -1,15 +1,15 @@
-// src/components/Filters.jsx
+
 import React, { useState, useEffect } from "react";
 
 const AMENITIES = ["Pool", "Gym", "Parking", "Garden", "Garage", "Play Area"];
 
 export default function Filters({ filters, setFilters, query, setQuery }) {
-  // local price inputs (so the user can type and then click Apply)
+ 
   const [localMin, setLocalMin] = useState(filters.minPrice ?? "");
   const [localMax, setLocalMax] = useState(filters.maxPrice ?? "");
-  const [status, setStatus] = useState(""); // show small feedback
+  const [status, setStatus] = useState(""); 
 
-  // keep local inputs in sync when parent filters change (optional)
+  
   useEffect(() => {
     setLocalMin(filters.minPrice ?? "");
     setLocalMax(filters.maxPrice ?? "");
@@ -22,12 +22,12 @@ export default function Filters({ filters, setFilters, query, setQuery }) {
     setFilters({ ...filters, amenities: next });
   };
 
-  // Apply handler — type is button so it doesn't submit any form
+  
   const applyPrice = (e) => {
-    // defensive: prevent any default (if wrapped in a form)
+    
     if (e && e.preventDefault) e.preventDefault();
 
-    // normalize inputs: allow empty -> 0 or parse numbers
+   
     const min = localMin === "" ? 0 : Number(localMin);
     const max = localMax === "" ? 999999999 : Number(localMax);
 
@@ -37,7 +37,7 @@ export default function Filters({ filters, setFilters, query, setQuery }) {
       return;
     }
 
-    // if user mistakenly swapped min/max, swap them for convenience
+    
     let finalMin = min;
     let finalMax = max;
     if (min > max) {
@@ -48,18 +48,18 @@ export default function Filters({ filters, setFilters, query, setQuery }) {
     setFilters({ ...filters, minPrice: finalMin, maxPrice: finalMax });
     setStatus(`Price applied: ₹${finalMin.toLocaleString()} – ₹${finalMax.toLocaleString()}`);
 
-    // clear status after a short delay
+    
     setTimeout(() => setStatus(""), 2500);
   };
 
   return (
     <div>
-      <h3>Filters</h3>
+      <h3>🔎Filters</h3>
 
-      {/* ---------- Top row: type | city | price+apply | bedrooms ---------- */}
+      
       <div className="filters-row">
         <div className="filters-col">
-          <label className="label">Property type</label>
+          <label className="label">🏘️Property type</label>
           <select
             className="select"
             value={filters.type}
@@ -67,9 +67,9 @@ export default function Filters({ filters, setFilters, query, setQuery }) {
             aria-label="Property type"
           >
             <option value="">Any</option>
-            <option value="Apartment">Apartment</option>
-            <option value="House">House</option>
-            <option value="Office">Office</option>
+            <option value="Apartment">🏢Apartment</option>
+            <option value="House">🏠House</option>
+            <option value="Office">🏢Office</option>
           </select>
         </div>
 
@@ -107,7 +107,7 @@ export default function Filters({ filters, setFilters, query, setQuery }) {
               aria-label="Max price"
               placeholder="Max"
             />
-            {/* make sure this is type="button" so it never triggers a form submit */}
+           
             <button
               type="button"
               className="btn-apply"
@@ -118,7 +118,7 @@ export default function Filters({ filters, setFilters, query, setQuery }) {
             </button>
           </div>
 
-          {/* small inline status text */}
+         
           {status && <div style={{ marginTop: 8, fontSize: 13, color: "#0b1220" }}>{status}</div>}
         </div>
 
@@ -135,7 +135,7 @@ export default function Filters({ filters, setFilters, query, setQuery }) {
         </div>
       </div>
 
-      {/* ---------- Second row: amenities | search | view ---------- */}
+      
       <div className="filters-row" style={{ marginTop: 12, alignItems: "flex-end" }}>
         <div className="filters-col amenities-col">
           <label className="label">Amenities</label>
@@ -154,7 +154,7 @@ export default function Filters({ filters, setFilters, query, setQuery }) {
         </div>
 
         <div className="filters-col">
-          <label className="label">Search</label>
+          <label className="label">🔍Search</label>
           <input
             className="input"
             placeholder="Search title, city, description"
@@ -186,7 +186,7 @@ export default function Filters({ filters, setFilters, query, setQuery }) {
               onClick={() => setFilters({ ...filters, view: "map" })}
               aria-pressed={filters.view === "map"}
             >
-              Map
+             Map
             </button>
           </div>
         </div>

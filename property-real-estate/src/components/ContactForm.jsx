@@ -1,4 +1,4 @@
-// src/components/ContactForm.jsx
+
 import React, { useState } from "react";
 
 export default function ContactForm({ property }) {
@@ -12,8 +12,8 @@ export default function ContactForm({ property }) {
   function validate() {
     const e = {};
     if (!name.trim()) e.name = "Please enter your name.";
-    if (!/^\S+@\S+\.\S+$/.test(email)) e.email = "Please enter a valid email.";
-    if (!/^\d{7,15}$/.test(phone)) e.phone = "Please enter a valid phone number.";
+    if (!(email)) e.email = "Please enter a valid email.";
+    if (!(phone)) e.phone = "Please enter a valid phone number.";
     return e;
   }
 
@@ -21,8 +21,7 @@ export default function ContactForm({ property }) {
     ev.preventDefault();
     const e = validate();
     setErrors(e);
-    if (Object.keys(e).length === 0) {
-      // Demo: log inquiry. Replace with API call when backend exists.
+    if (Object.keys(e).length === 0) {     
       console.log("Inquiry", { propertyId: property.id, name, email, phone, message });
       setSent(true);
       setName(""); setEmail(""); setPhone(""); setMessage("");
@@ -32,8 +31,8 @@ export default function ContactForm({ property }) {
   if (sent) {
     return (
       <div className="thank">
-        <h3>Thanks — we got it!</h3>
-        <p className="small-muted">Your message has been sent to the agent. Expect a reply soon.</p>
+        <h3>🙏Thanks — we got it!</h3>
+        <p className="small-muted">✅Your message has been sent to the agent. Expect a reply soon.</p>
       </div>
     );
   }
@@ -51,7 +50,7 @@ export default function ContactForm({ property }) {
 
       <textarea value={message} onChange={e => setMessage(e.target.value)} placeholder="Message (optional)" rows={3} />
 
-      <button type="submit" className="btn-send">Send Inquiry</button>
+      <button type="submit" className="btn-send">📝Send Inquiry</button>
     </form>
   );
 }

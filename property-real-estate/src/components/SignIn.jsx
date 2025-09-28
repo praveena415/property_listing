@@ -1,4 +1,4 @@
-// src/components/SignIn.jsx
+
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { auth } from "../utils/firebase";
@@ -11,7 +11,6 @@ export default function SignIn({ setUser }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // If a protected route redirected here, location.state.from holds the original location
   const fromPath = location.state?.from?.pathname || "/";
 
   async function handleSubmit(e) {
@@ -22,7 +21,7 @@ export default function SignIn({ setUser }) {
       const u = { email: userCred.user.email, uid: userCred.user.uid };
       setUser(u);
       localStorage.setItem("demoUser", JSON.stringify(u));
-      // Navigate to the original destination (or home)
+      
       navigate(fromPath, { replace: true });
     } catch (error) {
       setErr(error.message);

@@ -451,7 +451,7 @@ const PROPERTY_DATA = [
     description: "Spacious warehouse with heavy vehicle access and secure compound — distribution ready.",
     agent: { name: "Anuj Malik", email: "anuj@example.com", phone: "9811002233" },
     addedAt: "2025-07-20"
-  }
+  } 
    
 ];
 
